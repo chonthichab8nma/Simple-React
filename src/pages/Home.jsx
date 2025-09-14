@@ -1,0 +1,44 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import products from "../data/products";
+import "../App.css";
+
+/*
+  คอมโพเนนต์ Home
+  - ทำหน้าที่เป็นหน้าหลักของเว็บไซต์ (Homepage)
+  - แสดงผลแบนเนอร์ต้อนรับและรายการสินค้าแนะนำ
+*/
+
+function Home() {
+  const featuredProducts = products.slice(0, 3);
+
+  return (
+    <div className="home-container">
+      <div className="banner">
+        <h1>Welcome to Puma Shop</h1>
+      </div>
+
+      <h2>Featured Products</h2>
+      <div className="featured-products">
+        {featuredProducts.map(product => {
+          const image = Array.isArray(product.colors[0].image)
+            ? product.colors[0].image[0]
+            : product.colors[0].image;
+
+          return (
+            <div key={product.id} className="product-card">
+              <img src={image} alt={product.name} className="img" />
+              <h3>{product.name}</h3>
+              <p>{product.price} THB</p>
+              <Link to={`/products/${product.id}`} className="view-btn">
+                View
+              </Link>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+export default Home;

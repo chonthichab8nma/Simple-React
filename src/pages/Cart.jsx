@@ -1,0 +1,29 @@
+import React from "react";
+import { useCart } from "../context/CartContext";
+import CartItem from "../components/CartItem";
+import { Link } from "react-router-dom";
+
+/*
+  หน้า Cart
+  - คอมโพเนนต์นี้ทำหน้าที่แสดงรายการสินค้าทั้งหมดที่อยู่ในตะกร้า
+  - มีการคำนวณราคารวมทั้งหมด และมีปุ่มสำหรับไปยังหน้า Checkout
+*/
+
+function Cart() {
+  const { cart } = useCart();
+
+  if (cart.length === 0) return <h2>Your cart is empty</h2>;
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <h2>Your Cart</h2>
+      {cart.map(item => <CartItem key={`${item.id}-${item.color}-${item.size}`} item={item} />)}
+      <h3>Total: ฿{total}</h3>
+      <Link to="/checkout">Go to Checkout</Link>
+    </div>
+  );
+}
+
+export default Cart;
