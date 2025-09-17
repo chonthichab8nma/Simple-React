@@ -4,22 +4,29 @@ import { useNavigate } from "react-router-dom";
 import "../App.css";
 
 export default function Checkout() {
+  // ดึง cart และฟังก์ชัน setCart จาก context
   const { cart, setCart } = useCart();
+  // สร้าง navigate สำหรับเปลี่ยนหน้า
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
-
+  // สร้าง state สำหรับฟอร์ม
+  const [name, setName] = useState("");  // เก็บชื่อผู้สั่งซื้อ
+  const [address, setAddress] = useState(""); // เก็บที่อยู่ผู้สั่งซื้อ
+  
+  // ฟังก์ชันเมื่อกดปุ่ม Confirm Order
   const handleConfirm = () => {
+    // ตรวจสอบว่ากรอกชื่อและที่อยู่ครบหรือไม่
     if (!name || !address) {
       alert("Please fill in your name and address");
       return;
     }
+    // ถ้ากรอกครบ
     alert("Order confirmed!");
     setCart([]);
     navigate("/success");
   };
 
+  // ถ้าไม่มีสินค้าในตะกร้า
   if (cart.length === 0) return <h2 style={{ textAlign: "center", padding: "50px" }}>Your cart is empty</h2>;
 
   return (

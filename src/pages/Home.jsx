@@ -10,6 +10,8 @@ import "../App.css";
 */
 
 function Home() {
+
+  // เลือก 3 สินค้าตัวแรกมาแสดงเป็น Featured Products
   const featuredProducts = products.slice(0, 3);
 
   return (
@@ -19,8 +21,13 @@ function Home() {
       </div>
 
       <h2>Featured Products</h2>
+
+       {/* แสดงสินค้าส่วนแนะนำทั้งหมด */}
       <div className="featured-products">
         {featuredProducts.map(product => {
+          // เลือกรูปหลักของสินค้า
+          // ถ้า colors[0].image เป็น array → เลือกภาพแรก
+          // ถ้าไม่ใช่ array ให้ใช้ภาพเดียว
           const image = Array.isArray(product.colors[0].image)
             ? product.colors[0].image[0]
             : product.colors[0].image;

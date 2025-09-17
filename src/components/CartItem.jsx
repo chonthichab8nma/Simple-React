@@ -13,23 +13,31 @@ export default function CartItem({ item }) {
 
   return (
     <div className="cart-item">
+
+      {/* แสดงรูปสินค้า */}
       <img src={item.image} alt={item.name} className="cart-item-image" />
+
+      {/* รายละเอียดสินค้า */}
       <div className="cart-item-details">
         <h4 className="cart-item-name">{item.name}</h4>
         <p className="cart-item-info">Color: {item.color}</p>
         <p className="cart-item-info">Size: {item.size}</p>
         <p className="cart-item-price">฿{item.price}</p>
       </div>
+
+      {/* ปุ่มควบคุมจำนวนสินค้า */}
       <div className="item-quantity-control">
         <button 
           className="quantity-btn" 
           onClick={() => decrement(item.id, item.color, item.size)}>-</button>
         <span>{item.quantity}</span>
+
         <button 
           className="quantity-btn" 
           onClick={() => increment(item.id, item.color, item.size)}>+</button>
       </div>
       <button 
+      
         className="remove-item-btn" 
         onClick={() => removeFromCart(item.id, item.color, item.size)}>Remove</button>
     </div>

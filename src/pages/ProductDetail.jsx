@@ -11,19 +11,35 @@ import "../App.css";
 */
 
 function ProductDetail() {
+  // ดึง id ของสินค้าจาก URL
   const { id } = useParams();
+
+  // หา product ที่ตรงกับ id จาก array products
   const product = products.find(p => p.id === parseInt(id));
+
+  // ดึงฟังก์ชัน addToCart จาก context
   const { addToCart } = useCart();
 
+  // ไม่พบสินค้า ให้แสดงข้อความ Product not found
   if (!product) return <h2>Product not found</h2>;
 
+  // ตรวจสอบว่าสินค้ามีสีหรือไม่
   const hasColors = product.colors && product.colors.length > 0;
+
+  // กำหนด state สำหรับสีที่เลือก
+  // ถ้ามีสีให้เลือกสีแรกเป็น default
+  // ถ้าไม่มีสี ให้สร้าง object ชั่วคราวเพื่อใช้รูปหลักของสินค้า
   const [selectedColor, setSelectedColor] = useState(
     hasColors ? product.colors[0] : { name: "", image: [product.image] }
   );
+
+  // state สำหรับแสดงภาพหลักของสินค้า
   const [mainImage, setMainImage] = useState(selectedColor.image[0]);
+
+  // state สำหรับขนาดที่เลือก
   const [selectedSize, setSelectedSize] = useState(product.sizes ? product.sizes[0] : null);
 
+  // ฟังก์ชันเมื่อกด Add to Cart
   const handleAddToCart = () => {
     addToCart({
       ...product,
@@ -38,11 +54,15 @@ function ProductDetail() {
   return (
   <div className="center-container">
     <div className="product-detail-container">
+      {/* แสดงภาพหลัก */}
       <img src={mainImage} alt={product.name} className="product-image" />
-
+      
+      {/* ชื่อสินค้า */}
       <h2 className="product-name">{product.name}</h2>
+      {/* ราคาสินค้า */}
       <h3 className="product-price">{product.price} THB</h3>
 
+      {/* เลือกสีสินค้า */}
       {hasColors && (
         <div style={{ marginTop: "20px" }}>
           <h4 className="product-label">Colors:</h4>
@@ -61,6 +81,7 @@ function ProductDetail() {
         </div>
       )}
 
+      {/* แสดงภาพย่อยของสีที่เลือก */}
       {selectedColor.image.length > 1 && (
         <div style={{ marginTop: "10px" }}>
           {selectedColor.image.map((img, idx) => (
@@ -76,6 +97,7 @@ function ProductDetail() {
         </div>
       )}
 
+      {/* เลือกขนาดสินค้า */}
       {product.sizes && (
         <div style={{ marginTop: "20px" }}>
           <h4 className="product-label">Sizes:</h4>
@@ -91,6 +113,7 @@ function ProductDetail() {
         </div>
       )}
 
+      {/* ปุ่มเพิ่มสินค้าไปยังตะกร้า */}
       <button onClick={handleAddToCart} className="add-to-cart-btn">
         Add to Cart
       </button>
